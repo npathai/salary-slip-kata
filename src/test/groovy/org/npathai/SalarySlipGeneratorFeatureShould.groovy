@@ -2,7 +2,7 @@ package org.npathai
 
 import spock.lang.Specification
 
-class SalarySlipGeneratorSpec extends Specification {
+class SalarySlipGeneratorFeatureShould extends Specification {
 
     def "calculates salary slip"() {
         given: "I have an employee John Doe with annual salary of ${annualSalary} Euros"
@@ -11,9 +11,11 @@ class SalarySlipGeneratorSpec extends Specification {
         SalarySlip actualSalarySlip = new SalarySlipGenerator().generateFor(employee)
         then: "monthly salary slip should contain monthly gross salary"
         actualSalarySlip.monthlyGrossSalary().doubleValue() == monthlyGrossSalary
+        actualSalarySlip.nationalInsuranceContribution().doubleValue() == nationalInsuranceContribution
         where:
-        annualSalary || monthlyGrossSalary
-        5000         || 416.67
+        annualSalary || monthlyGrossSalary || nationalInsuranceContribution
+        5000         || 416.67             || 0.00
+        9060.00      || 755.00             || 10.00
     }
 
 }

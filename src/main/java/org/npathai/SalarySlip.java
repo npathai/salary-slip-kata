@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 public class SalarySlip {
     private final Employee employee;
     private final BigDecimal monthlyGrossSalary;
+    private NationalInsurance nationalInsurance;
 
     public SalarySlip(Employee employee) {
         this.employee = employee;
@@ -21,5 +22,13 @@ public class SalarySlip {
 
     public BigDecimal monthlyGrossSalary() {
         return monthlyGrossSalary;
+    }
+
+    public BigDecimal nationalInsuranceContribution() {
+        return nationalInsurance.contribution();
+    }
+
+    public void setNationalInsurance(NationalInsurance nationalInsurance) {
+        this.nationalInsurance = nationalInsurance;
     }
 }

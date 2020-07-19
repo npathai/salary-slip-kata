@@ -3,6 +3,9 @@ package org.npathai;
 public class SalarySlipGenerator {
 
     public SalarySlip generateFor(Employee employee) {
-        return new SalarySlip(employee);
+        SalarySlip salarySlip = new SalarySlip(employee);
+        NationalInsurance nationalInsurance = new NationalInsurance(employee);
+        salarySlip.setNationalInsurance(nationalInsurance);
+        return salarySlip;
     }
 }
