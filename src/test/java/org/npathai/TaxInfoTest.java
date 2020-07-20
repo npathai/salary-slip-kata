@@ -70,4 +70,18 @@ public class TaxInfoTest {
         assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
         assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
     }
+
+    @CsvSource(value = {
+            "160000.00, 0.00, 160000.00, 58100.00",
+            "200000.00, 0.00, 200000.00, 76100.00"
+    }, delimiter = ',')
+    @DisplayName("Applies 45 percent tax for annual salary above 150K")
+    @ParameterizedTest
+    public void applies45PercentTax(double annualIncome, double taxFreeAllowance, double taxableIncome, double taxPayable) {
+        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
+        TaxInfo taxInfo = new TaxInfo(employee);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    }
 }

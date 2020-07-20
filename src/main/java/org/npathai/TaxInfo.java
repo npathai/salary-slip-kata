@@ -42,6 +42,7 @@ public class TaxInfo {
     private void calculateTaxPayable() {
         calculateAtNormalRate();
         calculateAtHigherRate();
+        calculateAtHighestRate();
     }
 
     private void calculateAtNormalRate() {
@@ -57,13 +58,25 @@ public class TaxInfo {
     }
 
     private void calculateAtHigherRate() {
-        if (annualSalary.subtract(BigDecimal.valueOf(43000)).compareTo(BigDecimal.ZERO) > 0) {
-            BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(43000));
+        if (annualSalary.compareTo(BigDecimal.valueOf(43000)) > 0) {
+            BigDecimal taxableIncome = annualSalary.compareTo(BigDecimal.valueOf(150000)) > 0
+                    ? BigDecimal.valueOf(150000)
+                    : annualSalary;
+
+            BigDecimal surplus = taxableIncome.subtract(BigDecimal.valueOf(43000));
             if (annualSalary.compareTo(BigDecimal.valueOf(100000)) > 0) {
                 BigDecimal allowanceSurplus = MAX_TAX_FREE_ALLOWANCE.subtract(annualTaxFreeAllowance);
                 surplus = surplus.add(allowanceSurplus);
             }
             BigDecimal tax = surplus.multiply(BigDecimal.valueOf(0.4)).setScale(2);
+            annualTaxPayable = annualTaxPayable.add(tax);
+        }
+    }
+
+    private void calculateAtHighestRate() {
+        if (annualSalary.compareTo(BigDecimal.valueOf(150000)) > 0) {
+            BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(150000));
+            BigDecimal tax = surplus.multiply(BigDecimal.valueOf(0.45)).setScale(2);
             annualTaxPayable = annualTaxPayable.add(tax);
         }
     }
