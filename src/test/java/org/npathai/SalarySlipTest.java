@@ -11,6 +11,7 @@ class SalarySlipTest {
 
     @ParameterizedTest
     @CsvSource({
+            "5000, 416.67",
             "6000, 500.00",
             "11000, 916.67",
             "12000, 916.67",
