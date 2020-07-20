@@ -31,4 +31,16 @@ public class SalarySlip {
     public void setNationalInsurance(NationalInsurance nationalInsurance) {
         this.nationalInsurance = nationalInsurance;
     }
+
+    public BigDecimal taxFreeAllowance() {
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal taxableIncome() {
+        return BigDecimal.ZERO;
+    }
+
+    public BigDecimal taxPayable() {
+        return BigDecimal.ZERO;
+    }
 }
