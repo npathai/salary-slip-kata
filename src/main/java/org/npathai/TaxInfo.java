@@ -18,7 +18,13 @@ public class TaxInfo {
     }
 
     private BigDecimal calculateTaxFreeAllowance() {
-        if (annualSalary.subtract(MAX_TAX_FREE_ALLOWANCE).compareTo(BigDecimal.ZERO) > 0) {
+        if (annualSalary.compareTo(BigDecimal.valueOf(100000)) > 0) {
+            BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(100000));
+            BigDecimal decreasedAllowance = surplus.multiply(BigDecimal.valueOf(0.5)).setScale(2);
+            return MAX_TAX_FREE_ALLOWANCE.compareTo(decreasedAllowance) > 0
+                    ? MAX_TAX_FREE_ALLOWANCE.subtract(decreasedAllowance)
+                    : BigDecimal.ZERO.setScale(2);
+        } else if (annualSalary.compareTo(MAX_TAX_FREE_ALLOWANCE) > 0) {
             return MAX_TAX_FREE_ALLOWANCE;
         } else {
             return annualSalary;
@@ -26,8 +32,8 @@ public class TaxInfo {
     }
 
     private BigDecimal calculateTaxableIncome() {
-        if (annualSalary.subtract(MAX_TAX_FREE_ALLOWANCE).compareTo(BigDecimal.ZERO) > 0) {
-            return annualSalary.subtract(MAX_TAX_FREE_ALLOWANCE);
+        if (annualSalary.compareTo(MAX_TAX_FREE_ALLOWANCE) > 0) {
+            return annualSalary.subtract(annualTaxFreeAllowance);
         } else {
             return BigDecimal.ZERO.setScale(2);
         }
@@ -53,6 +59,10 @@ public class TaxInfo {
     private void calculateAtHigherRate() {
         if (annualSalary.subtract(BigDecimal.valueOf(43000)).compareTo(BigDecimal.ZERO) > 0) {
             BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(43000));
+            if (annualSalary.compareTo(BigDecimal.valueOf(100000)) > 0) {
+                BigDecimal allowanceSurplus = MAX_TAX_FREE_ALLOWANCE.subtract(annualTaxFreeAllowance);
+                surplus = surplus.add(allowanceSurplus);
+            }
             BigDecimal tax = surplus.multiply(BigDecimal.valueOf(0.4)).setScale(2);
             annualTaxPayable = annualTaxPayable.add(tax);
         }

@@ -53,4 +53,21 @@ public class TaxInfoTest {
         assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
         assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "101000, 10500.00, 90500.00, 29800.00",
+            "111000, 5500.00, 105500.00, 35800.00",
+            "122000, 0.00, 122000.00, 42400.00",
+            "150000, 0.00, 150000.00, 53600.00"
+    })
+    public void reducesTaxFreeAllowanceBy1ForEvery2PoundsForSalaryAbove100K(double annualIncome, double taxFreeAllowance,
+                                                                            double taxableIncome, double taxPayable) {
+
+        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
+        TaxInfo taxInfo = new TaxInfo(employee);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    }
 }
