@@ -18,9 +18,7 @@ class SalarySlipTest {
     })
     public void providesMonthlyTaxFreeAllowance(BigDecimal annualGrossSalary, BigDecimal monthlyTaxFreeAllowance) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
-        SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
-
+        SalarySlip salarySlip = new SalarySlip(employee, new NationalInsurance(employee.annualSalary()), new TaxInfo(employee.annualSalary()));
         assertThat(salarySlip.taxFreeAllowance()).isEqualTo(monthlyTaxFreeAllowance);
     }
 
@@ -33,9 +31,7 @@ class SalarySlipTest {
     })
     public void providesMonthlyTaxableIncome(BigDecimal annualGrossSalary, BigDecimal monthlyTaxableIncome) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
-        SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
-
+        SalarySlip salarySlip = new SalarySlip(employee, new NationalInsurance(employee.annualSalary()), new TaxInfo(employee.annualSalary()));
         assertThat(salarySlip.taxableIncome()).isEqualTo(monthlyTaxableIncome);
     }
 
@@ -48,9 +44,7 @@ class SalarySlipTest {
     })
     public void providesMonthlyTaxPayable(BigDecimal annualGrossSalary, BigDecimal monthlyTaxPayable) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
-        SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
-
+        SalarySlip salarySlip = new SalarySlip(employee, new NationalInsurance(employee.annualSalary()), new TaxInfo(employee.annualSalary()));
         assertThat(salarySlip.taxPayable()).isEqualTo(monthlyTaxPayable);
     }
 
@@ -63,9 +57,7 @@ class SalarySlipTest {
     })
     public void providesMonthlyNationalInsurance(BigDecimal annualGrossSalary, BigDecimal monthlyNationalInsurance) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
-        SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setNationalInsurance(new NationalInsurance(annualGrossSalary));
-
+        SalarySlip salarySlip = new SalarySlip(employee, new NationalInsurance(employee.annualSalary()), new TaxInfo(employee.annualSalary()));
         assertThat(salarySlip.nationalInsuranceContribution()).isEqualTo(monthlyNationalInsurance);
     }
 }
