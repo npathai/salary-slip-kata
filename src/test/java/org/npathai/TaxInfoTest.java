@@ -16,12 +16,11 @@ public class TaxInfoTest {
     }, delimiter = ',')
     @DisplayName("Applies 0 percent tax for annual salary upto 11000")
     @ParameterizedTest
-    public void appliesNoTax(double annualIncome, double taxFreeAllowance, double taxableIncome, double taxPayable) {
-        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
-        TaxInfo taxInfo = new TaxInfo(employee);
-        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
-        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
-        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    public void appliesNoTax(BigDecimal annualIncome, BigDecimal taxFreeAllowance, BigDecimal taxableIncome, BigDecimal taxPayable) {
+        TaxInfo taxInfo = new TaxInfo(annualIncome);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(taxFreeAllowance.setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(taxableIncome.setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(taxPayable.setScale(2));
     }
 
     @CsvSource(value = {
@@ -31,12 +30,12 @@ public class TaxInfoTest {
     }, delimiter = ',')
     @DisplayName("Applies 20 percent tax for annual salary between 11000 and 43000")
     @ParameterizedTest
-    public void applies20PercentTax(double annualIncome, double taxFreeAllowance, double taxableIncome, double taxPayable) {
-        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
-        TaxInfo taxInfo = new TaxInfo(employee);
-        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
-        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
-        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    public void applies20PercentTax(BigDecimal annualIncome, BigDecimal taxFreeAllowance, BigDecimal taxableIncome,
+                                    BigDecimal taxPayable) {
+        TaxInfo taxInfo = new TaxInfo(annualIncome);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(taxFreeAllowance.setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(taxableIncome.setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(taxPayable.setScale(2));
     }
 
     @CsvSource(value = {
@@ -46,12 +45,12 @@ public class TaxInfoTest {
     }, delimiter = ',')
     @DisplayName("Applies 40 percent tax for annual salary above 43000")
     @ParameterizedTest
-    public void applies40PercentTax(double annualIncome, double taxFreeAllowance, double taxableIncome, double taxPayable) {
-        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
-        TaxInfo taxInfo = new TaxInfo(employee);
-        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
-        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
-        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    public void applies40PercentTax(BigDecimal annualIncome, BigDecimal taxFreeAllowance, BigDecimal taxableIncome,
+                                    BigDecimal taxPayable) {
+        TaxInfo taxInfo = new TaxInfo(annualIncome);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(taxFreeAllowance.setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(taxableIncome.setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(taxPayable.setScale(2));
     }
 
     @ParameterizedTest
@@ -61,14 +60,13 @@ public class TaxInfoTest {
             "122000, 0.00, 122000.00, 42400.00",
             "150000, 0.00, 150000.00, 53600.00"
     })
-    public void reducesTaxFreeAllowanceBy1ForEvery2PoundsForSalaryAbove100K(double annualIncome, double taxFreeAllowance,
-                                                                            double taxableIncome, double taxPayable) {
+    public void reducesTaxFreeAllowanceBy1ForEvery2PoundsForSalaryAbove100K(BigDecimal annualIncome, BigDecimal taxFreeAllowance,
+                                                                            BigDecimal taxableIncome, BigDecimal taxPayable) {
 
-        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
-        TaxInfo taxInfo = new TaxInfo(employee);
-        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
-        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
-        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+        TaxInfo taxInfo = new TaxInfo(annualIncome);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(taxFreeAllowance.setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(taxableIncome.setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(taxPayable.setScale(2));
     }
 
     @CsvSource(value = {
@@ -77,11 +75,11 @@ public class TaxInfoTest {
     }, delimiter = ',')
     @DisplayName("Applies 45 percent tax for annual salary above 150K")
     @ParameterizedTest
-    public void applies45PercentTax(double annualIncome, double taxFreeAllowance, double taxableIncome, double taxPayable) {
-        Employee employee = new Employee(1L, "John", BigDecimal.valueOf(annualIncome).setScale(2));
-        TaxInfo taxInfo = new TaxInfo(employee);
-        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(BigDecimal.valueOf(taxFreeAllowance).setScale(2));
-        assertThat(taxInfo.taxableIncome()).isEqualTo(BigDecimal.valueOf(taxableIncome).setScale(2));
-        assertThat(taxInfo.taxPayable()).isEqualTo(BigDecimal.valueOf(taxPayable).setScale(2));
+    public void applies45PercentTax(BigDecimal annualIncome, BigDecimal taxFreeAllowance, BigDecimal taxableIncome,
+                                    BigDecimal taxPayable) {
+        TaxInfo taxInfo = new TaxInfo(annualIncome);
+        assertThat(taxInfo.taxFreeAllowance()).isEqualTo(taxFreeAllowance.setScale(2));
+        assertThat(taxInfo.taxableIncome()).isEqualTo(taxableIncome.setScale(2));
+        assertThat(taxInfo.taxPayable()).isEqualTo(taxPayable.setScale(2));
     }
 }

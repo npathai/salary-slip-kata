@@ -19,7 +19,7 @@ class SalarySlipTest {
     public void providesMonthlyTaxFreeAllowance(BigDecimal annualGrossSalary, BigDecimal monthlyTaxFreeAllowance) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
         SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(employee));
+        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
 
         assertThat(salarySlip.taxFreeAllowance()).isEqualTo(monthlyTaxFreeAllowance);
     }
@@ -34,7 +34,7 @@ class SalarySlipTest {
     public void providesMonthlyTaxableIncome(BigDecimal annualGrossSalary, BigDecimal monthlyTaxableIncome) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
         SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(employee));
+        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
 
         assertThat(salarySlip.taxableIncome()).isEqualTo(monthlyTaxableIncome);
     }
@@ -49,7 +49,7 @@ class SalarySlipTest {
     public void providesMonthlyTaxPayable(BigDecimal annualGrossSalary, BigDecimal monthlyTaxPayable) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
         SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setTaxInfo(new TaxInfo(employee));
+        salarySlip.setTaxInfo(new TaxInfo(annualGrossSalary));
 
         assertThat(salarySlip.taxPayable()).isEqualTo(monthlyTaxPayable);
     }
@@ -64,7 +64,7 @@ class SalarySlipTest {
     public void providesMonthlyNationalInsurance(BigDecimal annualGrossSalary, BigDecimal monthlyNationalInsurance) {
         Employee employee = new Employee(1L, "John", annualGrossSalary);
         SalarySlip salarySlip = new SalarySlip(employee);
-        salarySlip.setNationalInsurance(new NationalInsurance(employee));
+        salarySlip.setNationalInsurance(new NationalInsurance(annualGrossSalary));
 
         assertThat(salarySlip.nationalInsuranceContribution()).isEqualTo(monthlyNationalInsurance);
     }

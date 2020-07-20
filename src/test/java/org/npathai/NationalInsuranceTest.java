@@ -17,8 +17,7 @@ class NationalInsuranceTest {
             "8060, 0.00"
     })
     public void considersNoInsuranceContribution(BigDecimal annualGrossSalary, BigDecimal annualNationalInsuranceContribution) {
-        Employee employee = new Employee(1L, "John", annualGrossSalary);
-        NationalInsurance nationalInsurance = new NationalInsurance(employee);
+        NationalInsurance nationalInsurance = new NationalInsurance(annualGrossSalary);
         assertThat(nationalInsurance.contribution()).isEqualTo(annualNationalInsuranceContribution);
     }
 
@@ -30,8 +29,7 @@ class NationalInsuranceTest {
             "43000.00, 4192.80"
     })
     public void considers12PercentInsuranceContribution(BigDecimal annualGrossSalary, BigDecimal annualNationalInsuranceContribution) {
-        Employee employee = new Employee(1L, "John", annualGrossSalary);
-        NationalInsurance nationalInsurance = new NationalInsurance(employee);
+        NationalInsurance nationalInsurance = new NationalInsurance(annualGrossSalary);
         assertThat(nationalInsurance.contribution()).isEqualTo(annualNationalInsuranceContribution);
     }
 
@@ -41,8 +39,7 @@ class NationalInsuranceTest {
             "45000.00, 4232.80"
     })
     public void considers2PercentInsuranceContribution(BigDecimal annualGrossSalary, BigDecimal annualNationalInsuranceContribution) {
-        Employee employee = new Employee(1L, "John", annualGrossSalary);
-        NationalInsurance nationalInsurance = new NationalInsurance(employee);
+        NationalInsurance nationalInsurance = new NationalInsurance(annualGrossSalary);
         assertThat(nationalInsurance.contribution()).isEqualTo(annualNationalInsuranceContribution);
     }
 }

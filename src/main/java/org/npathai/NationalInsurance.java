@@ -4,10 +4,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class NationalInsurance {
+    private final BigDecimal annualGrossSalary;
     private BigDecimal contribution = BigDecimal.ZERO.setScale(2);
 
-    public NationalInsurance(Employee employee) {
-        calculateNationalInsuranceContribution(employee.annualSalary());
+    public NationalInsurance(BigDecimal annualSalary) {
+        this.annualGrossSalary = annualSalary;
+        calculateNationalInsuranceContribution(annualSalary);
     }
 
     private void calculateNationalInsuranceContribution(BigDecimal annualSalary) {
