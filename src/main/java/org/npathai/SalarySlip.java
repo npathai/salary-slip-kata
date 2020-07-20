@@ -7,6 +7,7 @@ public class SalarySlip {
     private final Employee employee;
     private final BigDecimal monthlyGrossSalary;
     private NationalInsurance nationalInsurance;
+    private TaxInfo taxInfo;
 
     public SalarySlip(Employee employee) {
         this.employee = employee;
@@ -25,7 +26,7 @@ public class SalarySlip {
     }
 
     public BigDecimal nationalInsuranceContribution() {
-        return nationalInsurance.contribution();
+        return toMonthly(nationalInsurance.contribution());
     }
 
     public void setNationalInsurance(NationalInsurance nationalInsurance) {
@@ -33,14 +34,22 @@ public class SalarySlip {
     }
 
     public BigDecimal taxFreeAllowance() {
-        return BigDecimal.ZERO;
+        return toMonthly(taxInfo.taxFreeAllowance());
     }
 
     public BigDecimal taxableIncome() {
-        return BigDecimal.ZERO;
+        return toMonthly(taxInfo.taxableIncome());
     }
 
     public BigDecimal taxPayable() {
-        return BigDecimal.ZERO;
+        return toMonthly(taxInfo.taxPayable());
+    }
+
+    public void setTaxInfo(TaxInfo taxInfo) {
+        this.taxInfo = taxInfo;
+    }
+
+    private BigDecimal toMonthly(BigDecimal taxableIncome) {
+        return taxableIncome.divide(BigDecimal.valueOf(12), RoundingMode.HALF_UP).setScale(2);
     }
 }

@@ -10,7 +10,7 @@ public class TaxInfo {
     private final BigDecimal annualTaxableIncome;
 
     public TaxInfo(Employee employee) {
-        this.annualSalary = employee.annualSalary();
+        this.annualSalary = employee.annualSalary().setScale(2);
         this.annualTaxFreeAllowance = calculateTaxFreeAllowance();
         this.annualTaxableIncome = calculateTaxableIncome();
         this.annualTaxPayable = BigDecimal.ZERO.setScale(2);

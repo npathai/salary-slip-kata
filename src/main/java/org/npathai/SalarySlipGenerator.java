@@ -6,6 +6,7 @@ public class SalarySlipGenerator {
         SalarySlip salarySlip = new SalarySlip(employee);
         NationalInsurance nationalInsurance = new NationalInsurance(employee);
         salarySlip.setNationalInsurance(nationalInsurance);
+        salarySlip.setTaxInfo(new TaxInfo(employee));
         return salarySlip;
     }
 }

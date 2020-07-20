@@ -4,18 +4,40 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class NationalInsurance {
-    private BigDecimal contribution = BigDecimal.ZERO;
+    private BigDecimal contribution = BigDecimal.ZERO.setScale(2);
 
     public NationalInsurance(Employee employee) {
         calculateNationalInsuranceContribution(employee.annualSalary());
     }
 
     private void calculateNationalInsuranceContribution(BigDecimal annualSalary) {
-        BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(8060));
-        if (BigDecimal.ZERO.compareTo(surplus) == -1) {
+        calculateAtNormalRate(annualSalary);
+        calculateAtLowerRate(annualSalary);
+    }
+
+    private void calculateAtLowerRate(BigDecimal annualSalary) {
+        if (annualSalary.compareTo(BigDecimal.valueOf(43000)) > 0) {
+            BigDecimal surplus = annualSalary.subtract(BigDecimal.valueOf(43000));
+
             BigDecimal contribution = surplus.setScale(10)
-                    .divide(BigDecimal.valueOf(100), RoundingMode.HALF_UP)
+                    .multiply(BigDecimal.valueOf(0.02))
                     .setScale(2, RoundingMode.HALF_UP);
+
+            this.contribution = this.contribution.add(contribution);
+        }
+    }
+
+    private void calculateAtNormalRate(BigDecimal annualSalary) {
+        if (annualSalary.compareTo(BigDecimal.valueOf(8060)) > 0) {
+            BigDecimal applicableAmount = annualSalary.compareTo(BigDecimal.valueOf(43000)) > 0
+                    ? BigDecimal.valueOf(43000)
+                    : annualSalary;
+            BigDecimal surplus = applicableAmount.subtract(BigDecimal.valueOf(8060));
+
+            BigDecimal contribution = surplus.setScale(10)
+                    .multiply(BigDecimal.valueOf(0.12))
+                    .setScale(2, RoundingMode.HALF_UP);
+
             this.contribution = this.contribution.add(contribution);
         }
     }
